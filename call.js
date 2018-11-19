@@ -3,20 +3,19 @@ var flag_push_enable = 0;
 
 function call_test(text) {
     console.log('test call');
-    var msg = text;
     var url = $('#webhook').val();
     $.ajax({
-	data: 'payload=' + JSON.stringify({
-	    text: text,
-	    username: 'bot'
-	}),
-	type: 'POST',
-	url: url,
-    	dataType: 'json',
-    	processData: false,
-	success: function() {
-            console.log('成功');
-        },
+        data: 'payload=' + JSON.stringify({
+            text: text,
+            username: 'bot'
+        }),
+        type: 'POST',
+        url: url,
+        dataType: 'json',
+        processData: false,
+        success: function() {
+                console.log('成功');
+            },
         error: function(){
             console.log('失敗');
         }
@@ -50,21 +49,21 @@ function record() {
     recognition.continuous = true;
 
     recognition.onsoundstart = function() {
-	$("#status").val("認識中");
+        $("#status").val("認識中");
     };
     
     recognition.onnomatch = function() {
-	$("#status").val("もう一度試してください");
+        $("#status").val("もう一度試してください");
     };
     
     recognition.onerror = function() {
-	$("#status").val("エラー");
+        $("#status").val("エラー");
         if(flag_speech == 0)
             record();
     };
     
     recognition.onsoundend = function() {
-	$("#status").val("停止中");
+        $("#status").val("停止中");
         record();
     };
 
@@ -73,14 +72,14 @@ function record() {
         var results = event.results;
         for (var i = event.resultIndex; i < results.length; i++) {
             if (results[i].isFinal) {
-		var text = results[i][0].transcript;
-		$("#result_text").val(text);
-		call_test(text);
+                var text = results[i][0].transcript;
+                $("#result_text").val(text);
+                call_test(text);
                 record();
             }
             else {
-		var text = results[i][0].transcript;
-		$("#result_text").val(text);
+                var text = results[i][0].transcript;
+                $("#result_text").val(text);
                 flag_speech = 1;
             }
         }
@@ -113,12 +112,12 @@ function record() {
 
 $(function () {
     $('.record').on('click', function () {
-	record();
+        record();
     });
 });
 
 $(function () {
     $('.slack-submit').on('click', function () {
-	call_test('SLACK 通知テストです');
+        call_test('SLACK 通知テストです');
     });
 });
