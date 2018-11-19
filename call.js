@@ -4,10 +4,11 @@ var flag_push_enable = 0;
 function call_test(text) {
     console.log('test call');
     var url = $('#webhook').val();
+    var userName = $('#user_name').val();
     $.ajax({
         data: 'payload=' + JSON.stringify({
             text: text,
-            username: 'bot'
+            username: userName
         }),
         type: 'POST',
         url: url,
