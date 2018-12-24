@@ -1,4 +1,4 @@
-var flag_speech = 0;
+var flag_during_speech = false;
 var flag_now_recording = false;
 var recognition;
 const COOKIE_KEYS = ['webhook', 'name', 'image', 'channel']
@@ -51,7 +51,7 @@ function reset_recording() {
     
     recognition.onerror = function(event) {
         $("#status").val(event.error);
-        if (flag_speech == 0) { record(); }
+        if (!flag_during_speech) { record(); }
     };
     
     recognition.onsoundend = function() {
@@ -73,13 +73,13 @@ function reset_recording() {
             else {
                 var text = results[i][0].transcript;
                 $("#result_text").val(text);
-                flag_speech = 1;
+                flag_during_speech = true;
             }
         }
     }
     
     $("#result_text").val('START');
-    flag_speech = 0;
+    flag_during_speech = false;
     recognition.start();
 }
 
