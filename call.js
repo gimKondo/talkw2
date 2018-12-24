@@ -51,7 +51,7 @@ function reset_recording() {
     
     recognition.onerror = function(event) {
         $("#status").val(event.error);
-        if (!flag_during_speech) { record(); }
+        if (!flag_during_speech) { reset_recording(); }
     };
     
     recognition.onsoundend = function() {
