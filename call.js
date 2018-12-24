@@ -32,6 +32,9 @@ function call_slack(text) {
 
 function record() {
     window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+    if (recognition) {
+        recognition.abort();
+    }
     recognition = new webkitSpeechRecognition();
     var str_lang = $('input:radio[name="radio2"]:checked').val();
     recognition.lang = str_lang;
