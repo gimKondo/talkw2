@@ -1,4 +1,3 @@
-var flag_speech = 0;
 var flag_now_recording = false;
 var recognition;
 var flag_push_enable = 0;
@@ -52,7 +51,7 @@ function record() {
     
     recognition.onerror = function(event) {
         $("#status").val(event.error);
-        if (flag_speech == 0) { record(); }
+        record();
     };
     
     recognition.onsoundend = function() {
@@ -74,13 +73,11 @@ function record() {
             else {
                 var text = results[i][0].transcript;
                 $("#result_text").val(text);
-                flag_speech = 1;
             }
         }
     }
     
     $("#result_text").val('START');
-    flag_speech = 0;
     recognition.start();
 }
 
