@@ -4,7 +4,7 @@ var flag_push_enable = 0;
 const COOKIE_KEYS = ['webhook', 'name', 'image', 'channel']
 const LANG_KEY = 'lang'
 
-function call_slack(text) {
+function post_to_slack(text) {
     var url = $('#webhook').val();
     var name = $('#name').val();
     var url_image = $('#image').val();
@@ -29,7 +29,7 @@ function call_slack(text) {
     });
 }
 
-function record() {
+function reset_recording() {
     window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
     if (recognition) {
         recognition.stop();
@@ -51,13 +51,13 @@ function record() {
     
     recognition.onerror = function(event) {
         $("#status").val(event.error);
-        record();
+        reset_recording();
     };
     
     recognition.onsoundend = function() {
         $("#status").val("Stopped");
         recognition.stop();
-        record();
+        reset_recording();
     };
 
     recognition.onresult = function(event) {
@@ -66,9 +66,9 @@ function record() {
             if (results[i].isFinal) {
                 var text = results[i][0].transcript;
                 $("#result_text").val(text);
-                call_slack(text);
+                post_to_slack(text);
                 recognition.stop();
-                record();
+                reset_recording();
             }
             else {
                 var text = results[i][0].transcript;
@@ -102,7 +102,7 @@ function toggle_recording() {
         $('#record').val('RECORD STOP');
         $('#record').removeClass('uk-button-primary').addClass('uk-button-danger');
         flag_now_recording = true;
-        record();
+        reset_recording();
     }
 }
 
@@ -150,6 +150,6 @@ $(function () {
     });
 
     $('#slack-submit').on('click', function () {
-        call_slack('Slack Notify');
+        post_to_slack('Slack Notify');
     });
 });
