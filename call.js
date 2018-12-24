@@ -1,6 +1,5 @@
 var flag_now_recording = false;
 var recognition;
-var flag_push_enable = 0;
 const COOKIE_KEYS = ['webhook', 'name', 'image', 'channel']
 const LANG_KEY = 'lang'
 
