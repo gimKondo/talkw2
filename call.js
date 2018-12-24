@@ -50,7 +50,9 @@ function reset_recording() {
     
     recognition.onerror = function(event) {
         $("#status").val(event.error);
-        reset_recording();
+        if (flag_now_recording) {
+            reset_recording();
+        }
     };
     
     recognition.onsoundend = function() {
